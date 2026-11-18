@@ -1,0 +1,41 @@
+---
+layout: base.njk
+bodyClass: article
+---
+{%- set doc = content | outline %}
+<header>
+  <nav class="trail" aria-label="Site">
+    <a href="/">Zuhayrium</a> / <a href="/blogs/">Writing</a>
+  </nav>
+</header>
+
+<main>
+  <h1>{{ title }}</h1>
+  {%- if standfirst %}
+  <p class="standfirst">{{ standfirst }}</p>
+  {%- endif %}
+
+  <dl class="dates">
+    <div>
+      <dt>Published</dt>
+      <dd><time datetime="{{ page.date | isoDate }}">{{ page.date | shortDate }}</time></dd>
+    </div>
+  </dl>
+
+  {%- if doc.headings.length %}
+  <nav class="toc" aria-labelledby="toc-label">
+    <p class="toc-label" id="toc-label">On this page</p>
+    <ul>
+      {%- for heading in doc.headings %}
+      <li><a href="#{{ heading.id }}">{{ heading.text | safe }}</a></li>
+      {%- endfor %}
+    </ul>
+  </nav>
+  {%- endif %}
+
+{{ doc.html | safe }}
+</main>
+
+<footer>
+  <p><a href="/#{{ page.fileSlug }}">Back to this essay in the record</a> · <a href="/blogs/">All writing</a></p>
+</footer>

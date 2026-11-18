@@ -1,0 +1,27 @@
+---
+layout: base.njk
+bodyClass: record
+title: Writing
+description: Essays by Ahmed Zuhayr.
+permalink: /blogs/
+---
+<header class="column">
+  <nav class="trail" aria-label="Site">
+    <a href="/">Zuhayrium</a>
+  </nav>
+  <h1>Writing</h1>
+  <p>A place for my braindumps which I chose to make public</p>
+</header>
+
+<main>
+  {%- for item in collections.writing %}
+
+  <article class="entry" id="{{ item.page.fileSlug }}">
+    <h2><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="stamp">Published <time datetime="{{ item.data.date | isoDate }}">{{ item.data.date | shortDate }}</time></p>
+    <div class="note">
+      <p>{{ item.data.standfirst }}</p>
+    </div>
+  </article>
+  {%- endfor %}
+</main>

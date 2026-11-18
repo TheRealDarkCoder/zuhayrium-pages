@@ -1,0 +1,6 @@
+# www.robotstxt.org/
+
+# Allow crawling of all content
+# Please don't take over the world
+User-agent: *
+Disallow: 404.html

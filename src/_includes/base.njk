@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title + " — Zuhayrium" if title else "Zuhayrium" }}</title>
+  {%- set summary = description or standfirst %}
+  {%- if summary %}
+  <meta name="description" content="{{ summary }}">
+  {%- endif %}
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="{{ bodyClass }}">
+{{ content | safe }}
+</body>
+</html>

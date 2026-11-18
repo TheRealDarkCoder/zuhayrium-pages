@@ -1,0 +1,63 @@
+---
+layout: base.njk
+bodyClass: record
+description: Hi you found me! This is my personal journal
+---
+{%- set periods = collections.record | byPeriod %}
+<header class="column">
+  <h1>Zuhayrium</h1>
+  <p>I’m Zuhayr. I do science stuff: electronics, AI, and whatever I can learn by building it before I feel ready. I also solder things, fly planes in simulators, and get a big smile when I see someone running their first line of code. This is where I keep a record of what I’ve made, tried, and written. Opinions are my own; feel free to disagree.</p>
+  <nav aria-label="Elsewhere">
+    <ul class="routes">
+      <li><a href="https://github.com/TheRealDarkCoder/">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ahmed-zuhayr/">LinkedIn</a></li>
+      <li><a href="/blogs/">All writing</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <nav class="contents" aria-labelledby="contents-title">
+    <h2 class="column" id="contents-title">Record of Activities</h2>
+    <ul class="periods">
+      {%- for period in periods %}
+      <li>
+        <a class="period-link" href="#{{ period.label | slugify }}">{{ period.label }}</a>
+        <ul>
+          {%- for item in period.items %}
+          <li><a href="#{{ item.page.fileSlug }}">{{ item.data.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </li>
+      {%- endfor %}
+    </ul>
+  </nav>
+  {%- for period in periods %}
+
+  <section>
+    <h2 class="period" id="{{ period.label | slugify }}">{{ period.label }}</h2>
+    {%- for item in period.items %}
+
+    {#- Essays link to their page and show their standfirst; activities have no page, so
+        their own content is the note. #}
+    <article class="entry" id="{{ item.page.fileSlug }}">
+      <h3>{% if item.url %}<a href="{{ item.url }}">{{ item.data.title }}</a>{% else %}{{ item.data.title }}{% endif %}</h3>
+      <p class="stamp">
+        {%- if item.data.stamp %}{{ item.data.stamp }}
+        {%- else %}{% if "writing" in item.data.tags %}Essay published {% endif %}<time datetime="{{ item.data.date | isoDate }}">{{ item.data.date | shortDate }}</time>
+          {#- A range: the start date places the entry; the dash stays with it when the stamp wraps. #}
+          {%- if item.data.end %}&nbsp;– <time datetime="{{ item.data.end | isoDate }}">{{ item.data.end | shortDate }}</time>{% endif %}
+        {%- endif -%}
+      </p>
+      <div class="note">
+        {%- if item.url %}
+        <p>{{ item.data.standfirst }}</p>
+        {%- else %}
+        {{ item.content | safe }}
+        {%- endif %}
+      </div>
+    </article>
+    {%- endfor %}
+  </section>
+  {%- endfor %}
+</main>
